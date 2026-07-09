@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NomixProgetto — Generatore di nomi creativi per il tuo progetto</title>
+  <meta name="description" content="Descrivi il tuo progetto in italiano e NomixProgetto genera una lista di nomi originali e creativi, combinando le parole chiave con pattern intelligenti.">
+  <link rel="canonical" href="https://cristianporco.it/app/nomixprogetto/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="NomixProgetto — Generatore di nomi creativi per il tuo progetto">
+  <meta property="og:description" content="Descrivi il tuo progetto in italiano e ottieni subito nomi originali generati dall’analisi delle tue parole chiave.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cristianporco.it/app/nomixprogetto/">
+
+  <!-- Preload font stylesheet for fast rendering -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+
+  <base href="./">
+  <link rel="stylesheet" href="static/style.css">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NomixProgetto",
+    "url": "https://cristianporco.it/app/nomixprogetto/",
+    "description": "Generatore di nomi creativi per progetti a partire da una descrizione in italiano.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "it"
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Salta al contenuto principale</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <span class="logo-mark" aria-hidden="true">Nx</span>
+      <p class="site-title">Nomix<span class="title-highlight">Progetto</span></p>
+      <p class="site-tagline">Nomi che nascono dalle tue idee</p>
+    </div>
+  </header>
+
+  <main id="main-content" class="main-content" role="main">
+    <!-- Input Section -->
+    <section class="input-section" aria-labelledby="input-heading">
+      <h1 id="input-heading" class="section-title">Descrivi il tuo progetto</h1>
+      <p class="section-subtitle">Incolla una descrizione in italiano e lascia che l’algoritmo trovi il nome perfetto.</p>
+
+      <form id="generator-form" class="generator-form" novalidate>
+        <div class="field-group">
+          <label for="descrizione" class="field-label">Descrizione del progetto</label>
+          <div class="textarea-wrapper">
+            <textarea
+              id="descrizione"
+              name="descrizione"
+              class="field-textarea"
+              maxlength="500"
+              rows="4"
+              placeholder="Es. app per gestire le spese domestiche condivise tra coinquilini"
+              aria-describedby="char-count desc-error"
+              required
+            ></textarea>
+            <span id="char-count" class="char-counter" aria-live="polite">0 / 500</span>
+          </div>
+          <span id="desc-error" class="field-error" role="alert"></span>
+        </div>
+
+        <button type="submit" id="generate-btn" class="btn-generate">
+          <span class="btn-label">Genera nomi</span>
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/>
+            <path d="M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results-section" class="results-section" aria-labelledby="results-heading" hidden>
+      <div class="results-header">
+        <h2 id="results-heading" class="section-title">Nomi generati</h2>
+        <p id="results-count" class="results-subtitle"></p>
+      </div>
+
+      <div id="names-grid" class="names-grid" role="list" aria-label="Lista dei nomi generati"></div>
+
+      <div class="results-actions">
+        <button id="regenerate-btn" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+          </svg>
+          Genera altri nomi
+        </button>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="loading-state" role="status" aria-live="polite" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Sto generando i nomi…</p>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="empty-state" aria-hidden="true">
+      <div class="empty-illustration" aria-hidden="true">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="8" y="12" width="64" height="56" rx="6" stroke="currentColor" stroke-width="2" fill="none"/>
+          <line x1="20" y1="30" x2="60" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="40" x2="52" y2="40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="50" x2="44" y2="50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="60" cy="58" r="14" fill="var(--color-primary)" stroke="var(--color-surface)" stroke-width="3"/>
+          <path d="M55 58l3.5 3.5 7-7" stroke="var(--color-surface)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="empty-text">Inserisci una descrizione del tuo progetto<br>e clicca <strong>Genera nomi</strong> per cominciare.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p class="footer-text">NomixProgetto — generatore locale, nessun dato viene inviato a server esterni.</p>
+    <p class="footer-credits">Realizzato con Python &amp; Flask &middot; algoritmo di generazione in italiano</p>
+  </footer>
+
+  <script src="static/script.js" defer></script>
+</body>
+</html>
